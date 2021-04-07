@@ -7,6 +7,7 @@
  *    an API call and returns a Promise containing the result. Uncomment code
  *    block #1 and run the code. What happens? (HINT: You may need to run
  *    `npm init` first.)
+ *     The code throws an error 
  * 
  * 
  * 2. Sometimes, when making API calls, we want to make a bunch of calls in
@@ -15,6 +16,7 @@
  * 
  *    Uncomment code block #2 and run the code. What happens? What advantages 
  *    does `Promise.all` give us when dealing with promises?
+ *     allows all the code to run independently
  * 
  * 
  * 3. Make another variable `planet1Promise` and assign to it the result of
@@ -52,9 +54,14 @@ function makePromise(url) {
     });
 }
 
+
+
 const person1Promise = makePromise('https://swapi.co/api/people/1')
 const person2Promise = makePromise('https://swapi.co/api/people/2')
 const person3Promise = makePromise('https://swapi.co/api/people/3')
+
+const planetPromise = makePromise('https://swapi.co/api/planets/1')
+
 
 /* Uncomment me! #1 */
 // person1Promise.then(function(personResult) {
@@ -65,13 +72,16 @@ const person3Promise = makePromise('https://swapi.co/api/people/3')
 // });
 
 /* Uncomment me! #2 */
-// Promise.all([person1Promise, person2Promise, person3Promise])
-//     .then(function(results) {
-//         for (let i = 0; i < 3; i++) {
-//             console.log(`Person ${i+1}'s name: ${results[i].name}`)
-//         }
-//     })
-//     .catch(function(err) {
-//         console.log('Got an error!')
-//         console.log(err)
-//     })
+Promise.all([person1Promise, person2Promise, person3Promise,planetPromise])
+    .then(function(results) {
+        for (let i = 0; i < 3; i++) {
+            console.log(`Person ${i+1}'s name: ${results[i].name}`)
+            if(i == 4){
+                console.log(`Planet ${1}'s name: ${results[1].name}`)  
+            }
+        }
+    })
+    .catch(function(err) {
+        console.log('Got an error!')
+        console.log(err)
+    })

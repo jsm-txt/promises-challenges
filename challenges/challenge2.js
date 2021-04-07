@@ -6,15 +6,18 @@
  * 1. Read over the code that follows. What will be printed to the console when
  *    it runs? Run the code using `node challenge2.js` and verify that your
  *    expectation was correct.
+ *    It should print out a greeting
  * 
  * 
  * 2. What happens if greet() fails? Make it fail by changing 'name' to a number
  *    instead of a string. What happens? Does uppercaser() still run?
+ *    It should print out some errors, uppercaser does not run
  * 
  * 
  * 3. What happens if greet() succeeds and uppercaser() fails? Modify your code
  *    to achieve this result by changing the values of 'name' and 'my_str' and
  *    run the code again.
+ *    The first greet runs but the uppercaser prints out and error message
  * 
  * 
  * 4. Write a method that takes a string as input and returns the input string
@@ -63,6 +66,23 @@ function uppercaser(str) {
     });
 }
 
+function spacer(mystr) {
+  return new Promise(function(resolve, reject) {
+    setTimeout(function() {
+      if (typeof mystr === 'string') { 
+          var x;
+          var txt = "";
+          for (x in mystr){
+          txt += mystr[x] + " ";
+          }
+          resolve(txt);
+      } else {
+        reject('Must be a string!');
+      }
+    }, 1000);
+  });
+}
+
 name = 'Ducky'
 my_str = 'Make School is Awesome!!!'
 
@@ -73,7 +93,14 @@ greet(name)
     })
     .then((uppercaserResult) => {
         console.log(uppercaserResult)
-    }).catch((err) => {
+    
+    })
+    .then((spacerResult) => {
+      console.log(spacerResult)
+      return spacer(my_str);
+  
+    })
+    .catch((err) => {
         console.log('Received an error!')
         console.log(err);
     });
